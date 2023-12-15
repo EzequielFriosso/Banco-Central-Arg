@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banco Central Argentina</title>
+</head>
+
+<body>
+    <div id="databank"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            const databank = document.querySelector("#databank");
+    
+            const fetchData = async () => {
+                const apiUrl = "usd";
+                const proxyUrl = "https://bcra-proxy-cors.vercel.app";
+    
+                try {
+                    const response = await fetch(`${proxyUrl}/${apiUrl}`, {
+                        headers: {
+                            Authorization: "BEARER (TOKEN)",
+                        },
+                    });
+    
+                    const data = await response.json();
+    
+                    data.forEach((info) => {
+                        const content = document.createElement('div');
+                        content.innerHTML = `<h4>Al Dia: ${info.d} Dolar Blue  ${info.v}</h4>`;
+                        databank.append(content);
+                    });
+                } catch (error) {
+                    console.error(error);
+                }
+            };
+    
+            fetchData();
+        });
+    </script>
+    
+
+    
+</body>
+</html>
